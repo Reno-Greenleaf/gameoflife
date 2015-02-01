@@ -32,7 +32,7 @@
 """
 
 
-import pygame, random, time, random
+import pygame, random, time
 from pygame.locals import *
 from boxes import Box
 
