@@ -55,8 +55,8 @@ mouse_x = False
 mouse_y = False
 rand_col = False
 
-# ALLOWING THE BOARD TO WRAP AROUND, "INFINITE PLAYING FIELD"
 def borderless(n, t):
+    """ Allowing the board to wrap around, "infinite playing field". """
 
     if n < 0:
         n = t + n;
@@ -65,8 +65,8 @@ def borderless(n, t):
 
     return n
 
-# THE RULES TO LIFE
 def rulesOfLife(b):
+    """ The rules to Life. """
 
     total_pop = 0;
 
@@ -75,14 +75,14 @@ def rulesOfLife(b):
     for i in range(MAX_X):
         pop_list[i] = ['0'] * MAX_Y
 
-   # CHECKING TO SEE WHAT IS POPULATED AROUND EACH CELL
+   # Checking to see what is populated around each cell.
     for y in range(MAX_Y):
         for x in range(MAX_X):
 
             pop = 0
             buf = []
 
-            # ROW A
+            # row A
             if b[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)] == True:
                 buf.append("a1 ")
                 pop += 1
@@ -95,7 +95,7 @@ def rulesOfLife(b):
                 buf.append("a3 ")
                 pop += 1
 
-            # ROW B
+            # row B
             if b[borderless(x-1, MAX_X)][borderless(y, MAX_Y)] == True:
                 buf.append("b1 ")
                 pop += 1
@@ -103,7 +103,7 @@ def rulesOfLife(b):
                 buf.append("b3 ")
                 pop += 1
 
-            # ROW C
+            # row C
             if b[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)] == True:
                 buf.append("c1 ")
                 pop += 1
@@ -124,7 +124,7 @@ def rulesOfLife(b):
             pop_list[x][y] = pop
 
     
-    # NOW THAT WE KNOW WHATS AROUND EACH CELL, WE IMPLEMENT THE RULES OF LIFE
+    # Now that we know whats around each cell, we implement the rules of Life.
     for y in range(MAX_Y):
         for x in range(MAX_X):
 
@@ -136,8 +136,6 @@ def rulesOfLife(b):
 
 
 def updateDisplay():
-
-    
     for dy in range(MAX_Y):
         for dx in range(MAX_X):
             if board[dx][dy] == True:
@@ -152,7 +150,7 @@ def updateDisplay():
     
     pygame.display.update()
 
-# MAKING THE BOXES
+# Making the boxes.
 boxes = [''] * MAX_X
     
 for i in range(MAX_X):
@@ -163,7 +161,7 @@ pygame.display.set_caption('Conway\'s Game of Life by jparmstrong.com')
 screen = pygame.display.set_mode([MAX_X * SIZE, MAX_Y * SIZE])
 
 
-# MAKING THE BOARD
+# Making the board.
 board = [False] * MAX_X
     
 for i in range(MAX_X):
@@ -184,7 +182,7 @@ while running:
             running = False
              
         if event.type == KEYDOWN and event.key == K_r:
-            # SETTING UP RANDOM GLYDERS
+            # Setting up random glyders.
             for i in range(random.randint(10, 20)):
                 sx = random.randint(0, MAX_X)
                 sy = random.randint(0, MAX_Y)
