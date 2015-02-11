@@ -70,75 +70,55 @@ def rulesOfLife(b):
 
     total_pop = 0;
 
-    pop_list = ['0'] * MAX_X
+    pop_list = [0] * MAX_X
     
     for i in range(MAX_X):
-        pop_list[i] = ['0'] * MAX_Y
+        pop_list[i] = [0] * MAX_Y
 
    # Checking to see what is populated around each cell.
     for y in range(MAX_Y):
         for x in range(MAX_X):
-
-            pop = 0
-            buf = []
-
             # row A
-            if b[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)] == True:
-                buf.append("a1 ")
-                pop += 1
+            if b[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)]:
+                pop_list[x][y] += 1
                 
-            if b[borderless(x, MAX_X)][borderless(y-1, MAX_Y)] == True:
-                buf.append("a2 ")
-                pop += 1
+            if b[borderless(x, MAX_X)][borderless(y-1, MAX_Y)]:
+                pop_list[x][y] += 1
                 
-            if b[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)] == True:
-                buf.append("a3 ")
-                pop += 1
+            if b[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)]:
+                pop_list[x][y] += 1
 
             # row B
-            if b[borderless(x-1, MAX_X)][borderless(y, MAX_Y)] == True:
-                buf.append("b1 ")
-                pop += 1
-            if b[borderless(x+1, MAX_X)][borderless(y, MAX_Y)] == True:
-                buf.append("b3 ")
-                pop += 1
+            if b[borderless(x-1, MAX_X)][borderless(y, MAX_Y)]:
+                pop_list[x][y] += 1
+            if b[borderless(x+1, MAX_X)][borderless(y, MAX_Y)]:
+                pop_list[x][y] += 1
 
             # row C
-            if b[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)] == True:
-                buf.append("c1 ")
-                pop += 1
+            if b[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)]:
+                pop_list[x][y] += 1
                 
-            if b[borderless(x, MAX_X)][borderless(y+1, MAX_Y)] == True:
-                buf.append("c2 ")
-                pop += 1
-                
-            if b[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)] == True:
-                buf.append("c3 ")
-                pop += 1
+            if b[borderless(x, MAX_X)][borderless(y+1, MAX_Y)]:
+                pop_list[x][y] += 1
 
-            if '-d' in argv and pop > 0:
-                print x,y,":",''.join(buf),pop
-
-            total_pop += pop
-
-            pop_list[x][y] = pop
-
+            if b[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)]:
+                pop_list[x][y] += 1
     
     # Now that we know whats around each cell, we implement the rules of Life.
     for y in range(MAX_Y):
         for x in range(MAX_X):
 
-            if b[x][y] == True and (pop_list[x][y] < 2 or pop_list[x][y] > 3):
+            if b[x][y] and (pop_list[x][y] < 2 or pop_list[x][y] > 3):
                 b[x][y] = False
                 
-            elif b[x][y] == False and pop_list[x][y] == 3:
+            elif not b[x][y] and pop_list[x][y] == 3:
                 b[x][y] = True
 
 
 def updateDisplay():
     for dy in range(MAX_Y):
         for dx in range(MAX_X):
-            if board[dx][dy] == True:
+            if board[dx][dy]:
                 if rand_col:
                     boxes[dx][dy] = Box([random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)], [dx * SIZE, dy * SIZE], SIZE)
                 else:
