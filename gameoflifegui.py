@@ -32,7 +32,7 @@
 """
 
 
-import pygame, random, time, random
+import pygame, random, time
 from pygame.locals import *
 from boxes import Box
 
@@ -40,31 +40,20 @@ MAX_X = 80
 MAX_Y = 40
 SIZE = 10
 DEBUG = False
-
-DEAD_CELL = '.'
-LIVE_CELL = 'o'
-
-rand_col = False
 keep_background = False
-
-# MAKING THE BOXES
-boxes = [''] * MAX_X
-    
-for i in range(MAX_X):
-    boxes[i] = [''] * MAX_Y
-
-pygame.init()
-pygame.display.set_caption('Conway\'s Game of Life by jparmstrong.com')
-screen = pygame.display.set_mode([MAX_X * SIZE, MAX_Y * SIZE])
-
-
-# MAKING THE BOARD
-board = [DEAD_CELL] * MAX_X
-    
-for i in range(MAX_X):
-    board[i] = [DEAD_CELL] * MAX_Y
-
-
+running = True
+button_down = False
+boxes = []
+board = []
+screen = False
+keys = False
+button_down = False
+button_type = False
+sx = False
+sy = False
+mouse_x = False
+mouse_y = False
+rand_col = False
 
 # ALLOWING THE BOARD TO WRAP AROUND, "INFINITE PLAYING FIELD"
 def borderless(n, t):
@@ -94,36 +83,36 @@ def rulesOfLife(b):
             buf = []
 
             # ROW A
-            if b[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)] == LIVE_CELL:
+            if b[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)] == True:
                 buf.append("a1 ")
                 pop += 1
                 
-            if b[borderless(x, MAX_X)][borderless(y-1, MAX_Y)] == LIVE_CELL:
+            if b[borderless(x, MAX_X)][borderless(y-1, MAX_Y)] == True:
                 buf.append("a2 ")
                 pop += 1
                 
-            if b[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)] == LIVE_CELL:
+            if b[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)] == True:
                 buf.append("a3 ")
                 pop += 1
 
             # ROW B
-            if b[borderless(x-1, MAX_X)][borderless(y, MAX_Y)] == LIVE_CELL:
+            if b[borderless(x-1, MAX_X)][borderless(y, MAX_Y)] == True:
                 buf.append("b1 ")
                 pop += 1
-            if b[borderless(x+1, MAX_X)][borderless(y, MAX_Y)] == LIVE_CELL:
+            if b[borderless(x+1, MAX_X)][borderless(y, MAX_Y)] == True:
                 buf.append("b3 ")
                 pop += 1
 
             # ROW C
-            if b[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)] == LIVE_CELL:
+            if b[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)] == True:
                 buf.append("c1 ")
                 pop += 1
                 
-            if b[borderless(x, MAX_X)][borderless(y+1, MAX_Y)] == LIVE_CELL:
+            if b[borderless(x, MAX_X)][borderless(y+1, MAX_Y)] == True:
                 buf.append("c2 ")
                 pop += 1
                 
-            if b[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)] == LIVE_CELL:
+            if b[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)] == True:
                 buf.append("c3 ")
                 pop += 1
 
@@ -139,11 +128,11 @@ def rulesOfLife(b):
     for y in range(MAX_Y):
         for x in range(MAX_X):
 
-            if b[x][y] == LIVE_CELL and (pop_list[x][y] < 2 or pop_list[x][y] > 3):
-                b[x][y] = DEAD_CELL
+            if b[x][y] == True and (pop_list[x][y] < 2 or pop_list[x][y] > 3):
+                b[x][y] = False
                 
-            elif b[x][y] == DEAD_CELL and pop_list[x][y] == 3:
-                b[x][y] = LIVE_CELL
+            elif b[x][y] == False and pop_list[x][y] == 3:
+                b[x][y] = True
 
 
 def updateDisplay():
@@ -151,22 +140,35 @@ def updateDisplay():
     
     for dy in range(MAX_Y):
         for dx in range(MAX_X):
-            if board[dx][dy] == LIVE_CELL:
+            if board[dx][dy] == True:
                 if rand_col:
                     boxes[dx][dy] = Box([random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)], [dx * SIZE, dy * SIZE], SIZE)
                 else:
                     boxes[dx][dy] = Box([255, 255, 255], [dx * SIZE, dy * SIZE], SIZE)
-            elif keep_background == False:
+            elif not keep_background:
                 boxes[dx][dy] = Box([0, 0, 0], [dx * SIZE, dy * SIZE], SIZE)
 
             screen.blit(boxes[dx][dy].image, boxes[dx][dy].rect)
     
     pygame.display.update()
 
+# MAKING THE BOXES
+boxes = [''] * MAX_X
+    
+for i in range(MAX_X):
+    boxes[i] = [''] * MAX_Y
+
+pygame.init()
+pygame.display.set_caption('Conway\'s Game of Life by jparmstrong.com')
+screen = pygame.display.set_mode([MAX_X * SIZE, MAX_Y * SIZE])
 
 
-running = True
-button_down = False
+# MAKING THE BOARD
+board = [False] * MAX_X
+    
+for i in range(MAX_X):
+    board[i] = [False] * MAX_Y
+
 keys = pygame.key.get_pressed()
 
 
@@ -188,17 +190,17 @@ while running:
                 sy = random.randint(0, MAX_Y)
 
                 if random.randint(0, 1) == 1:
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = LIVE_CELL;
-                    board[borderless(sx + 2, MAX_X)][borderless(sy + 1, MAX_Y)] = LIVE_CELL;
-                    board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = LIVE_CELL;
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 2, MAX_Y)] = LIVE_CELL;
-                    board[borderless(sx + 2, MAX_X)][borderless(sy + 2, MAX_Y)] = LIVE_CELL;
+                    board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = True;
+                    board[borderless(sx + 2, MAX_X)][borderless(sy + 1, MAX_Y)] = True;
+                    board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
+                    board[borderless(sx + 1, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
+                    board[borderless(sx + 2, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
                 else:
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = LIVE_CELL;
-                    board[borderless(sx + 0, MAX_X)][borderless(sy + 1, MAX_Y)] = LIVE_CELL;
-                    board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = LIVE_CELL;
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 2, MAX_Y)] = LIVE_CELL;
-                    board[borderless(sx + 2, MAX_X)][borderless(sy + 2, MAX_Y)] = LIVE_CELL;
+                    board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = True;
+                    board[borderless(sx + 0, MAX_X)][borderless(sy + 1, MAX_Y)] = True;
+                    board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
+                    board[borderless(sx + 1, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
+                    board[borderless(sx + 2, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
 
             updateDisplay()
                         
@@ -217,9 +219,9 @@ while running:
             sp_y = mouse_y / SIZE;
 
             if button_type == 1:
-                board[sp_x][sp_y] = LIVE_CELL;
+                board[sp_x][sp_y] = True;
             elif button_type == 3:
-                board[sp_x][sp_y] = DEAD_CELL;
+                board[sp_x][sp_y] = False;
                 
             updateDisplay()
 
@@ -245,4 +247,3 @@ while running:
     updateDisplay()
     rulesOfLife(board)
     pygame.time.delay(10)
-        
