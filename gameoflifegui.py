@@ -50,6 +50,7 @@ x = False
 y = False
 mouse_x = False
 mouse_y = False
+neighbors = False
 
 def borderless(n, t):
     """ Allowing the board to wrap around, "infinite playing field". """
@@ -86,6 +87,11 @@ board = [False] * MAX_X
     
 for i in range(MAX_X):
     board[i] = [False] * MAX_Y
+
+neighbors = [0] * MAX_X
+    
+for i in range(MAX_X):
+    neighbors[i] = [0] * MAX_Y
 
 while not started:
     for event in pygame.event.get():
@@ -151,34 +157,31 @@ while True:
                 
     
     updateDisplay()
-    pop_list = [0] * MAX_X
-    
-    for i in range(MAX_X):
-        pop_list[i] = [0] * MAX_Y
 
    # Checking to see what is populated around each cell.
     for y in range(MAX_Y):
         for x in range(MAX_X):
+            neighbors[x][y] = 0
             # row A
-            pop_list[x][y] += board[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)]
-            pop_list[x][y] += board[borderless(x, MAX_X)][borderless(y-1, MAX_Y)]
-            pop_list[x][y] += board[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)]
+            neighbors[x][y] += board[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)]
+            neighbors[x][y] += board[borderless(x, MAX_X)][borderless(y-1, MAX_Y)]
+            neighbors[x][y] += board[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)]
             # row B
-            pop_list[x][y] += board[borderless(x-1, MAX_X)][borderless(y, MAX_Y)]
-            pop_list[x][y] += board[borderless(x+1, MAX_X)][borderless(y, MAX_Y)]
+            neighbors[x][y] += board[borderless(x-1, MAX_X)][borderless(y, MAX_Y)]
+            neighbors[x][y] += board[borderless(x+1, MAX_X)][borderless(y, MAX_Y)]
             # row C
-            pop_list[x][y] += board[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)]
-            pop_list[x][y] += board[borderless(x, MAX_X)][borderless(y+1, MAX_Y)]
-            pop_list[x][y] += board[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)]
+            neighbors[x][y] += board[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)]
+            neighbors[x][y] += board[borderless(x, MAX_X)][borderless(y+1, MAX_Y)]
+            neighbors[x][y] += board[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)]
     
     # Now that we know whats around each cell, we implement the rules of Life.
     for y in range(MAX_Y):
         for x in range(MAX_X):
 
-            if board[x][y] and (pop_list[x][y] < 2 or pop_list[x][y] > 3):
+            if board[x][y] and (neighbors[x][y] < 2 or neighbors[x][y] > 3):
                 board[x][y] = False
                 
-            elif not board[x][y] and pop_list[x][y] == 3:
+            elif not board[x][y] and neighbors[x][y] == 3:
                 board[x][y] = True
 
     pygame.time.delay(10)
