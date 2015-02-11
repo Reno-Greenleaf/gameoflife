@@ -77,6 +77,25 @@ def updateDisplay():
     
     pygame.display.update()
 
+def glyders(board):
+    for i in range(randint(10, 20)):
+        x = randint(0, MAX_X)
+        y = randint(0, MAX_Y)
+
+        if randint(0, 1) == 1:
+            board[borderless(x + 1, MAX_X)][borderless(y + 0, MAX_Y)] = True
+            board[borderless(x + 2, MAX_X)][borderless(y + 1, MAX_Y)] = True
+            board[borderless(x + 0, MAX_X)][borderless(y + 2, MAX_Y)] = True
+            board[borderless(x + 1, MAX_X)][borderless(y + 2, MAX_Y)] = True
+            board[borderless(x + 2, MAX_X)][borderless(y + 2, MAX_Y)] = True
+        else:
+            board[borderless(x + 1, MAX_X)][borderless(y + 0, MAX_Y)] = True
+            board[borderless(x + 0, MAX_X)][borderless(y + 1, MAX_Y)] = True
+            board[borderless(x + 0, MAX_X)][borderless(y + 2, MAX_Y)] = True
+            board[borderless(x + 1, MAX_X)][borderless(y + 2, MAX_Y)] = True
+            board[borderless(x + 2, MAX_X)][borderless(y + 2, MAX_Y)] = True
+
+
 pygame.init()
 pygame.display.set_caption('Conway\'s Game of Life by jparmstrong.com')
 screen = pygame.display.set_mode([MAX_X * SIZE, MAX_Y * SIZE])
@@ -105,24 +124,7 @@ while not started:
             started = True
              
         if event.type == KEYDOWN and event.key == K_r:
-            # Setting up random glyders.
-            for i in range(randint(10, 20)):
-                x = randint(0, MAX_X)
-                y = randint(0, MAX_Y)
-
-                if randint(0, 1) == 1:
-                    board[borderless(x + 1, MAX_X)][borderless(y + 0, MAX_Y)] = True
-                    board[borderless(x + 2, MAX_X)][borderless(y + 1, MAX_Y)] = True
-                    board[borderless(x + 0, MAX_X)][borderless(y + 2, MAX_Y)] = True
-                    board[borderless(x + 1, MAX_X)][borderless(y + 2, MAX_Y)] = True
-                    board[borderless(x + 2, MAX_X)][borderless(y + 2, MAX_Y)] = True
-                else:
-                    board[borderless(x + 1, MAX_X)][borderless(y + 0, MAX_Y)] = True
-                    board[borderless(x + 0, MAX_X)][borderless(y + 1, MAX_Y)] = True
-                    board[borderless(x + 0, MAX_X)][borderless(y + 2, MAX_Y)] = True
-                    board[borderless(x + 1, MAX_X)][borderless(y + 2, MAX_Y)] = True
-                    board[borderless(x + 2, MAX_X)][borderless(y + 2, MAX_Y)] = True
-
+            glyders(board)
             updateDisplay()
                         
         if event.type == MOUSEBUTTONDOWN:
