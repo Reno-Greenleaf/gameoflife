@@ -58,11 +58,11 @@ def borderless(n, t):
     """ Allowing the board to wrap around, "infinite playing field". """
 
     if n < 0:
-        n = t + n
+        return t + n
     elif n >= t:
-        n = abs(n) % t
-
-    return n
+        return n - t
+    else:
+        return n
 
 def updateDisplay():
     for dy in range(MAX_Y):
