@@ -153,11 +153,9 @@ while running:
                 
             updateDisplay()
 
-
-running = True
 rand_col = True
 
-while running:
+while True:
     for event in pygame.event.get():
              
         if event.type == KEYDOWN and event.key == K_b:
@@ -167,9 +165,9 @@ while running:
                 keep_background = False
 
         if event.type == QUIT:
-                running = False
+                exit()
         if event.type == KEYDOWN and event.key == K_ESCAPE:
-                running = False
+                exit()
                 
     
     updateDisplay()
