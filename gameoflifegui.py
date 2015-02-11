@@ -44,7 +44,6 @@ keep_background = False
 started = False
 board = []
 screen = False
-keys = False
 button_down = False
 button_type = False
 x = False
@@ -87,9 +86,6 @@ board = [False] * MAX_X
     
 for i in range(MAX_X):
     board[i] = [False] * MAX_Y
-
-keys = pygame.key.get_pressed()
-
 
 while not started:
     for event in pygame.event.get():
