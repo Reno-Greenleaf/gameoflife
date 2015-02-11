@@ -65,56 +65,6 @@ def borderless(n, t):
 
     return n
 
-def rulesOfLife(b):
-    """ The rules to Life. """
-
-    total_pop = 0;
-
-    pop_list = [0] * MAX_X
-    
-    for i in range(MAX_X):
-        pop_list[i] = [0] * MAX_Y
-
-   # Checking to see what is populated around each cell.
-    for y in range(MAX_Y):
-        for x in range(MAX_X):
-            # row A
-            if b[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)]:
-                pop_list[x][y] += 1
-                
-            if b[borderless(x, MAX_X)][borderless(y-1, MAX_Y)]:
-                pop_list[x][y] += 1
-                
-            if b[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)]:
-                pop_list[x][y] += 1
-
-            # row B
-            if b[borderless(x-1, MAX_X)][borderless(y, MAX_Y)]:
-                pop_list[x][y] += 1
-            if b[borderless(x+1, MAX_X)][borderless(y, MAX_Y)]:
-                pop_list[x][y] += 1
-
-            # row C
-            if b[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)]:
-                pop_list[x][y] += 1
-                
-            if b[borderless(x, MAX_X)][borderless(y+1, MAX_Y)]:
-                pop_list[x][y] += 1
-
-            if b[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)]:
-                pop_list[x][y] += 1
-    
-    # Now that we know whats around each cell, we implement the rules of Life.
-    for y in range(MAX_Y):
-        for x in range(MAX_X):
-
-            if b[x][y] and (pop_list[x][y] < 2 or pop_list[x][y] > 3):
-                b[x][y] = False
-                
-            elif not b[x][y] and pop_list[x][y] == 3:
-                b[x][y] = True
-
-
 def updateDisplay():
     for dy in range(MAX_Y):
         for dx in range(MAX_X):
@@ -223,5 +173,48 @@ while running:
                 
     
     updateDisplay()
-    rulesOfLife(board)
+    pop_list = [0] * MAX_X
+    
+    for i in range(MAX_X):
+        pop_list[i] = [0] * MAX_Y
+
+   # Checking to see what is populated around each cell.
+    for y in range(MAX_Y):
+        for x in range(MAX_X):
+            # row A
+            if board[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)]:
+                pop_list[x][y] += 1
+                
+            if board[borderless(x, MAX_X)][borderless(y-1, MAX_Y)]:
+                pop_list[x][y] += 1
+                
+            if board[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)]:
+                pop_list[x][y] += 1
+
+            # row B
+            if board[borderless(x-1, MAX_X)][borderless(y, MAX_Y)]:
+                pop_list[x][y] += 1
+            if board[borderless(x+1, MAX_X)][borderless(y, MAX_Y)]:
+                pop_list[x][y] += 1
+
+            # row C
+            if board[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)]:
+                pop_list[x][y] += 1
+                
+            if board[borderless(x, MAX_X)][borderless(y+1, MAX_Y)]:
+                pop_list[x][y] += 1
+
+            if board[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)]:
+                pop_list[x][y] += 1
+    
+    # Now that we know whats around each cell, we implement the rules of Life.
+    for y in range(MAX_Y):
+        for x in range(MAX_X):
+
+            if board[x][y] and (pop_list[x][y] < 2 or pop_list[x][y] > 3):
+                board[x][y] = False
+                
+            elif not board[x][y] and pop_list[x][y] == 3:
+                board[x][y] = True
+
     pygame.time.delay(10)
