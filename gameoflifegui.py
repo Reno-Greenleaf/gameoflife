@@ -59,7 +59,7 @@ def borderless(n, t):
     """ Allowing the board to wrap around, "infinite playing field". """
 
     if n < 0:
-        n = t + n;
+        n = t + n
     elif n >= t:
         n = abs(n) % t
 
@@ -118,17 +118,17 @@ while running:
                 sy = random.randint(0, MAX_Y)
 
                 if random.randint(0, 1) == 1:
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = True;
-                    board[borderless(sx + 2, MAX_X)][borderless(sy + 1, MAX_Y)] = True;
-                    board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
-                    board[borderless(sx + 2, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
+                    board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = True
+                    board[borderless(sx + 2, MAX_X)][borderless(sy + 1, MAX_Y)] = True
+                    board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = True
+                    board[borderless(sx + 1, MAX_X)][borderless(sy + 2, MAX_Y)] = True
+                    board[borderless(sx + 2, MAX_X)][borderless(sy + 2, MAX_Y)] = True
                 else:
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = True;
-                    board[borderless(sx + 0, MAX_X)][borderless(sy + 1, MAX_Y)] = True;
-                    board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
-                    board[borderless(sx + 2, MAX_X)][borderless(sy + 2, MAX_Y)] = True;
+                    board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = True
+                    board[borderless(sx + 0, MAX_X)][borderless(sy + 1, MAX_Y)] = True
+                    board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = True
+                    board[borderless(sx + 1, MAX_X)][borderless(sy + 2, MAX_Y)] = True
+                    board[borderless(sx + 2, MAX_X)][borderless(sy + 2, MAX_Y)] = True
 
             updateDisplay()
                         
@@ -143,13 +143,13 @@ while running:
 
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
-            sp_x = mouse_x / SIZE;
-            sp_y = mouse_y / SIZE;
+            sp_x = mouse_x / SIZE
+            sp_y = mouse_y / SIZE
 
             if button_type == 1:
-                board[sp_x][sp_y] = True;
+                board[sp_x][sp_y] = True
             elif button_type == 3:
-                board[sp_x][sp_y] = False;
+                board[sp_x][sp_y] = False
                 
             updateDisplay()
 
