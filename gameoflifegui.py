@@ -47,8 +47,8 @@ screen = False
 keys = False
 button_down = False
 button_type = False
-sx = False
-sy = False
+x = False
+y = False
 mouse_x = False
 mouse_y = False
 
@@ -63,16 +63,16 @@ def borderless(n, t):
         return n
 
 def updateDisplay():
-    for dy in range(MAX_Y):
-        for dx in range(MAX_X):
-            if board[dx][dy]:
+    for y in range(MAX_Y):
+        for x in range(MAX_X):
+            if board[x][y]:
                 if started:
-                    cell = Box([randint(0, 255), randint(0, 255), randint(0, 255)], [dx * SIZE, dy * SIZE], SIZE)
+                    cell = Box([randint(0, 255), randint(0, 255), randint(0, 255)], [x * SIZE, y * SIZE], SIZE)
                 else:
-                    cell = Box([255, 255, 255], [dx * SIZE, dy * SIZE], SIZE)
+                    cell = Box([255, 255, 255], [x * SIZE, y * SIZE], SIZE)
                 screen.blit(cell.image, cell.rect)
             elif not keep_background:
-                cell = Box([0, 0, 0], [dx * SIZE, dy * SIZE], SIZE)
+                cell = Box([0, 0, 0], [x * SIZE, y * SIZE], SIZE)
                 screen.blit(cell.image, cell.rect)
     
     pygame.display.update()
@@ -105,21 +105,21 @@ while not started:
         if event.type == KEYDOWN and event.key == K_r:
             # Setting up random glyders.
             for i in range(randint(10, 20)):
-                sx = randint(0, MAX_X)
-                sy = randint(0, MAX_Y)
+                x = randint(0, MAX_X)
+                y = randint(0, MAX_Y)
 
                 if randint(0, 1) == 1:
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = True
-                    board[borderless(sx + 2, MAX_X)][borderless(sy + 1, MAX_Y)] = True
-                    board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = True
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 2, MAX_Y)] = True
-                    board[borderless(sx + 2, MAX_X)][borderless(sy + 2, MAX_Y)] = True
+                    board[borderless(x + 1, MAX_X)][borderless(y + 0, MAX_Y)] = True
+                    board[borderless(x + 2, MAX_X)][borderless(y + 1, MAX_Y)] = True
+                    board[borderless(x + 0, MAX_X)][borderless(y + 2, MAX_Y)] = True
+                    board[borderless(x + 1, MAX_X)][borderless(y + 2, MAX_Y)] = True
+                    board[borderless(x + 2, MAX_X)][borderless(y + 2, MAX_Y)] = True
                 else:
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = True
-                    board[borderless(sx + 0, MAX_X)][borderless(sy + 1, MAX_Y)] = True
-                    board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = True
-                    board[borderless(sx + 1, MAX_X)][borderless(sy + 2, MAX_Y)] = True
-                    board[borderless(sx + 2, MAX_X)][borderless(sy + 2, MAX_Y)] = True
+                    board[borderless(x + 1, MAX_X)][borderless(y + 0, MAX_Y)] = True
+                    board[borderless(x + 0, MAX_X)][borderless(y + 1, MAX_Y)] = True
+                    board[borderless(x + 0, MAX_X)][borderless(y + 2, MAX_Y)] = True
+                    board[borderless(x + 1, MAX_X)][borderless(y + 2, MAX_Y)] = True
+                    board[borderless(x + 2, MAX_X)][borderless(y + 2, MAX_Y)] = True
 
             updateDisplay()
                         
@@ -134,13 +134,13 @@ while not started:
 
             mouse_x, mouse_y = pygame.mouse.get_pos()
 
-            sp_x = mouse_x / SIZE
-            sp_y = mouse_y / SIZE
+            x = mouse_x / SIZE
+            y = mouse_y / SIZE
 
             if button_type == 1:
-                board[sp_x][sp_y] = True
+                board[x][y] = True
             elif button_type == 3:
-                board[sp_x][sp_y] = False
+                board[x][y] = False
                 
             updateDisplay()
 
