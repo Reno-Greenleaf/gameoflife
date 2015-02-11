@@ -161,19 +161,19 @@ while True:
    # Checking to see what is populated around each cell.
     for y in range(MAX_Y):
         for x in range(MAX_X):
-            neighbors[x][y] = 0
-            # row A
-            neighbors[x][y] += board[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)]
-            neighbors[x][y] += board[borderless(x, MAX_X)][borderless(y-1, MAX_Y)]
-            neighbors[x][y] += board[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)]
-            # row B
-            neighbors[x][y] += board[borderless(x-1, MAX_X)][borderless(y, MAX_Y)]
-            neighbors[x][y] += board[borderless(x+1, MAX_X)][borderless(y, MAX_Y)]
-            # row C
-            neighbors[x][y] += board[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)]
-            neighbors[x][y] += board[borderless(x, MAX_X)][borderless(y+1, MAX_Y)]
-            neighbors[x][y] += board[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)]
-    
+            neighbors[x][y] = sum((
+                # row A
+                board[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)],
+                board[borderless(x, MAX_X)][borderless(y-1, MAX_Y)],
+                board[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)],
+                # row B
+                board[borderless(x-1, MAX_X)][borderless(y, MAX_Y)],
+                board[borderless(x+1, MAX_X)][borderless(y, MAX_Y)],
+                # row C
+                board[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)],
+                board[borderless(x, MAX_X)][borderless(y+1, MAX_Y)],
+                board[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)]
+            ))    
     # Now that we know whats around each cell, we implement the rules of Life.
     for y in range(MAX_Y):
         for x in range(MAX_X):
