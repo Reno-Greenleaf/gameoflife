@@ -32,10 +32,10 @@
 """
 
 
-import pygame, random, time
-from pygame.locals import *
+import pygame
+from random import randint
+from pygame.locals import QUIT, KEYDOWN, K_ESCAPE, K_RETURN, K_r, K_b, MOUSEBUTTONDOWN, MOUSEBUTTONUP
 from boxes import Box
-from sys import argv
 
 MAX_X = 80
 MAX_Y = 40
@@ -69,7 +69,7 @@ def updateDisplay():
         for dx in range(MAX_X):
             if board[dx][dy]:
                 if rand_col:
-                    boxes[dx][dy] = Box([random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)], [dx * SIZE, dy * SIZE], SIZE)
+                    boxes[dx][dy] = Box([randint(0, 255), randint(0, 255), randint(0, 255)], [dx * SIZE, dy * SIZE], SIZE)
                 else:
                     boxes[dx][dy] = Box([255, 255, 255], [dx * SIZE, dy * SIZE], SIZE)
             elif not keep_background:
@@ -112,11 +112,11 @@ while running:
              
         if event.type == KEYDOWN and event.key == K_r:
             # Setting up random glyders.
-            for i in range(random.randint(10, 20)):
-                sx = random.randint(0, MAX_X)
-                sy = random.randint(0, MAX_Y)
+            for i in range(randint(10, 20)):
+                sx = randint(0, MAX_X)
+                sy = randint(0, MAX_Y)
 
-                if random.randint(0, 1) == 1:
+                if randint(0, 1) == 1:
                     board[borderless(sx + 1, MAX_X)][borderless(sy + 0, MAX_Y)] = True
                     board[borderless(sx + 2, MAX_X)][borderless(sy + 1, MAX_Y)] = True
                     board[borderless(sx + 0, MAX_X)][borderless(sy + 2, MAX_Y)] = True
