@@ -42,7 +42,6 @@ MAX_Y = 40
 SIZE = 10
 keep_background = False
 started = False
-boxes = []
 board = []
 screen = False
 keys = False
@@ -68,21 +67,15 @@ def updateDisplay():
         for dx in range(MAX_X):
             if board[dx][dy]:
                 if started:
-                    boxes[dx][dy] = Box([randint(0, 255), randint(0, 255), randint(0, 255)], [dx * SIZE, dy * SIZE], SIZE)
+                    cell = Box([randint(0, 255), randint(0, 255), randint(0, 255)], [dx * SIZE, dy * SIZE], SIZE)
                 else:
-                    boxes[dx][dy] = Box([255, 255, 255], [dx * SIZE, dy * SIZE], SIZE)
+                    cell = Box([255, 255, 255], [dx * SIZE, dy * SIZE], SIZE)
+                screen.blit(cell.image, cell.rect)
             elif not keep_background:
-                boxes[dx][dy] = Box([0, 0, 0], [dx * SIZE, dy * SIZE], SIZE)
-
-            screen.blit(boxes[dx][dy].image, boxes[dx][dy].rect)
+                cell = Box([0, 0, 0], [dx * SIZE, dy * SIZE], SIZE)
+                screen.blit(cell.image, cell.rect)
     
     pygame.display.update()
-
-# Making the boxes.
-boxes = [''] * MAX_X
-    
-for i in range(MAX_X):
-    boxes[i] = [''] * MAX_Y
 
 pygame.init()
 pygame.display.set_caption('Conway\'s Game of Life by jparmstrong.com')
