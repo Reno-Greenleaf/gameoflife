@@ -155,15 +155,10 @@ while True:
     for event in pygame.event.get():
              
         if event.type == KEYDOWN and event.key == K_b:
-            if keep_background == False:
-                keep_background = True
-            else:
-                keep_background = False
+            keep_background = keep_background == False
 
-        if event.type == QUIT:
-                exit()
-        if event.type == KEYDOWN and event.key == K_ESCAPE:
-                exit()
+        if event.type == QUIT or event.type == KEYDOWN and event.key == K_ESCAPE:
+            exit()
                 
     
     updateDisplay()
