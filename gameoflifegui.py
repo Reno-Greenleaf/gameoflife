@@ -35,11 +35,11 @@
 import pygame, random, time
 from pygame.locals import *
 from boxes import Box
+from sys import argv
 
 MAX_X = 80
 MAX_Y = 40
 SIZE = 10
-DEBUG = False
 keep_background = False
 running = True
 button_down = False
@@ -116,7 +116,7 @@ def rulesOfLife(b):
                 buf.append("c3 ")
                 pop += 1
 
-            if DEBUG and pop > 0:
+            if '-d' in argv and pop > 0:
                 print x,y,":",''.join(buf),pop
 
             total_pop += pop
