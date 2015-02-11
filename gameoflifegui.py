@@ -180,30 +180,16 @@ while True:
     for y in range(MAX_Y):
         for x in range(MAX_X):
             # row A
-            if board[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)]:
-                pop_list[x][y] += 1
-                
-            if board[borderless(x, MAX_X)][borderless(y-1, MAX_Y)]:
-                pop_list[x][y] += 1
-                
-            if board[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)]:
-                pop_list[x][y] += 1
-
+            pop_list[x][y] += board[borderless(x-1, MAX_X)][borderless(y-1, MAX_Y)]
+            pop_list[x][y] += board[borderless(x, MAX_X)][borderless(y-1, MAX_Y)]
+            pop_list[x][y] += board[borderless(x+1, MAX_X)][borderless(y-1, MAX_Y)]
             # row B
-            if board[borderless(x-1, MAX_X)][borderless(y, MAX_Y)]:
-                pop_list[x][y] += 1
-            if board[borderless(x+1, MAX_X)][borderless(y, MAX_Y)]:
-                pop_list[x][y] += 1
-
+            pop_list[x][y] += board[borderless(x-1, MAX_X)][borderless(y, MAX_Y)]
+            pop_list[x][y] += board[borderless(x+1, MAX_X)][borderless(y, MAX_Y)]
             # row C
-            if board[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)]:
-                pop_list[x][y] += 1
-                
-            if board[borderless(x, MAX_X)][borderless(y+1, MAX_Y)]:
-                pop_list[x][y] += 1
-
-            if board[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)]:
-                pop_list[x][y] += 1
+            pop_list[x][y] += board[borderless(x-1, MAX_X)][borderless(y+1, MAX_Y)]
+            pop_list[x][y] += board[borderless(x, MAX_X)][borderless(y+1, MAX_Y)]
+            pop_list[x][y] += board[borderless(x+1, MAX_X)][borderless(y+1, MAX_Y)]
     
     # Now that we know whats around each cell, we implement the rules of Life.
     for y in range(MAX_Y):
