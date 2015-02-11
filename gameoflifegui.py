@@ -42,7 +42,6 @@ MAX_Y = 40
 SIZE = 10
 keep_background = False
 running = True
-button_down = False
 boxes = []
 board = []
 screen = False
