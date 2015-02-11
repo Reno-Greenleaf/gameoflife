@@ -41,7 +41,7 @@ MAX_X = 80
 MAX_Y = 40
 SIZE = 10
 keep_background = False
-running = True
+started = False
 boxes = []
 board = []
 screen = False
@@ -52,7 +52,6 @@ sx = False
 sy = False
 mouse_x = False
 mouse_y = False
-rand_col = False
 
 def borderless(n, t):
     """ Allowing the board to wrap around, "infinite playing field". """
@@ -68,7 +67,7 @@ def updateDisplay():
     for dy in range(MAX_Y):
         for dx in range(MAX_X):
             if board[dx][dy]:
-                if rand_col:
+                if started:
                     boxes[dx][dy] = Box([randint(0, 255), randint(0, 255), randint(0, 255)], [dx * SIZE, dy * SIZE], SIZE)
                 else:
                     boxes[dx][dy] = Box([255, 255, 255], [dx * SIZE, dy * SIZE], SIZE)
@@ -99,7 +98,7 @@ for i in range(MAX_X):
 keys = pygame.key.get_pressed()
 
 
-while running:
+while not started:
     for event in pygame.event.get():
 
         if event.type == QUIT:
@@ -108,7 +107,7 @@ while running:
             exit()
             
         if event.type == KEYDOWN and event.key == K_RETURN:
-            running = False
+            started = True
              
         if event.type == KEYDOWN and event.key == K_r:
             # Setting up random glyders.
@@ -151,8 +150,6 @@ while running:
                 board[sp_x][sp_y] = False
                 
             updateDisplay()
-
-rand_col = True
 
 while True:
     for event in pygame.event.get():
